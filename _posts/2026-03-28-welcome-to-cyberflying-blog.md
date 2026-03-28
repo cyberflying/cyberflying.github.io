@@ -1,26 +1,28 @@
 ---
-title: 欢迎来到 CyberFlying 技术博客
+title: 欢迎来到 CyberFlying 的博客
 date: 2026-03-28
 categories: [博客]
-tags: [blog, github-pages, jekyll]
+tags: [blog, github-pages]
 pin: true
 ---
 
 ## 👋 你好！
 
-欢迎来到我的技术博客！这里是 **CyberFlying** 的技术分享空间。
+欢迎来到我的博客！这里是 **CyberFlying** 的分享空间。
 
 ## 关于这个博客
 
-这个博客基于 [Jekyll](https://jekyllrb.com/) 和 [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy) 主题搭建，托管在 GitHub Pages 上。我会在这里分享我在工作和学习中的技术实践、经验总结和思考。
+这个博客基于 [Jekyll](https://jekyllrb.com/) 和 [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy) 主题搭建，托管在 GitHub Pages 上。
+
+我会在这里分享我在工作和学习中的技术实践、经验总结和思考。
 
 ## 主要内容方向
 
 - ☁️ **云计算与 Azure** — 云架构、服务实践、最佳实践
-- 🐳 **容器与 Kubernetes** — K8S 集群管理、容器编排、微服务
-- 🌐 **物联网 (IoT)** — IoT Edge、边缘计算、设备管理
-- 🤖 **人工智能与 AI** — 认知服务、OpenAI、大模型应用
+- 🤖 **人工智能与 Agent** — Agent、LLM、大模型应用、认知服务
 - 🛠️ **开发工具与效率** — 提升开发效率的工具和方法
+- 🌐 **物联网 (IoT)** — IoT Edge、边缘计算、设备管理
+- 🐳 **容器与 Kubernetes** — K8S 集群管理、容器编排、微服务
 
 ## 历史文章
 
