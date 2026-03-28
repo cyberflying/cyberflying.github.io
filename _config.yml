@@ -16,7 +16,7 @@ timezone: Asia/Shanghai
 
 title: CyberFlying # the main title
 
-tagline: 技术分享·Cloud·AI·IoT # it will display as the subtitle
+tagline: 技术分享 · Cloud · AI · IoT # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   CyberFlying 的技术博客，分享 Azure、Kubernetes、IoT、AI 等技术实践与心得。
