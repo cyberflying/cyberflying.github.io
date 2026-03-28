@@ -1,7 +1,7 @@
 ---
 title: 欢迎来到 CyberFlying 的博客
 date: 2026-03-28
-categories: [博客]
+categories: [Blog]
 tags: [blog, github-pages]
 pin: true
 ---
