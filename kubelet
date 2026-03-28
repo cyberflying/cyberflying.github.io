@@ -1,1 +1,0 @@
-when the aci-vitualnode do the aks depolyment, if it has service type, it will leverage the AKS VM node to do the relay. so if customer go through this scenario, it will at least have one aks compute agent, or it will not work. if high traffice pattern it will not a good idea to relay from the aks compute note.
