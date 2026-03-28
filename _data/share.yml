@@ -2,6 +2,14 @@
 #  Icons from <https://fontawesome.com/>
 
 platforms:
+  - type: 微信
+    icon: "fab fa-weixin"
+    action: wechat-qr
+
+  - type: 小红书
+    icon: "fas fa-book"
+    action: copy-xiaohongshu
+
   - type: Twitter
     icon: "fa-brands fa-square-x-twitter"
     link: "https://twitter.com/intent/tweet?text=TITLE&url=URL"

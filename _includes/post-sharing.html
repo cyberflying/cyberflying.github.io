@@ -1,0 +1,213 @@
+<!-- Post sharing snippet (customized with WeChat QR and Xiaohongshu support) -->
+
+<div class="share-wrapper d-flex align-items-center">
+  <span class="share-label text-muted">{{ site.data.locales[include.lang].post.share }}</span>
+  <span class="share-icons">
+    {% capture title %}{{ page.title }} - {{ site.title }}{% endcapture %}
+    {% assign title = title | uri_escape %}
+    {% assign url = page.url | absolute_url | url_encode %}
+    {% assign raw_url = page.url | absolute_url %}
+
+    {% for share in site.data.share.platforms -%}
+      {%- capture tooltip -%}
+        data-bs-toggle="tooltip" data-bs-placement="top" title="{{ share.type }}" aria-label="{{ share.type }}"
+      {%- endcapture -%}
+
+      {% if share.type == 'Mastodon' %}
+        <script defer type="module" src="https://cdn.jsdelivr.net/npm/@justinribeiro/share-to-mastodon/+esm"></script>
+        <button class="btn text-start" {{ tooltip }}>
+          <share-to-mastodon
+            class="share-mastodon"
+            message="{{ title }}"
+            url="{{ url }}"
+            {%- if share.instances -%}
+              customInstanceList="{{ share.instances | jsonify | xml_escape }}"
+            {%- endif %}
+          >
+            <i class="fa-fw {{ share.icon }}"></i>
+          </share-to-mastodon>
+        </button>
+        {% continue %}
+      {% endif %}
+
+      {% if share.action == 'wechat-qr' %}
+        <!-- WeChat: show QR code modal -->
+        <button
+          class="btn text-start share-wechat-btn"
+          {{ tooltip }}
+          onclick="showWechatQR()"
+        >
+          <i class="fa-fw {{ share.icon }}"></i>
+        </button>
+        {% continue %}
+      {% endif %}
+
+      {% if share.action == 'copy-xiaohongshu' %}
+        <!-- Xiaohongshu: copy link with prompt -->
+        <button
+          class="btn text-start share-xhs-btn"
+          {{ tooltip }}
+          data-clipboard-text="{{ raw_url }}"
+          onclick="copyForXiaohongshu(this)"
+        >
+          <i class="fa-fw {{ share.icon }}"></i>
+        </button>
+        {% continue %}
+      {% endif %}
+
+      {% assign link = share.link | replace: 'TITLE', title | replace: 'URL', url %}
+
+      <a href="{{ link }}" target="_blank" rel="noopener" {{ tooltip }}>
+        <i class="fa-fw {{ share.icon }}"></i>
+      </a>
+    {% endfor %}
+
+    <button
+      id="copy-link"
+      aria-label="Copy link"
+      class="btn small"
+      data-bs-toggle="tooltip"
+      data-bs-placement="top"
+      title="{{ site.data.locales[include.lang].post.button.share_link.title }}"
+      data-title-succeed="{{ site.data.locales[include.lang].post.button.share_link.succeed }}"
+    >
+      <i class="fa-fw fas fa-link pe-none fs-6"></i>
+    </button>
+  </span>
+</div>
+
+<!-- WeChat QR Code Modal -->
+<div id="wechat-qr-modal" class="wechat-qr-overlay" style="display:none;" onclick="hideWechatQR(event)">
+  <div class="wechat-qr-card" onclick="event.stopPropagation()">
+    <div class="wechat-qr-header">
+      <i class="fab fa-weixin" style="color:#07C160;"></i>
+      <span>微信扫码分享</span>
+      <button class="wechat-qr-close" onclick="hideWechatQR(event)">&times;</button>
+    </div>
+    <div class="wechat-qr-body">
+      <img id="wechat-qr-img" src="" alt="WeChat QR Code" />
+      <p class="wechat-qr-tip">打开微信，扫一扫分享到朋友圈或发送给好友</p>
+    </div>
+  </div>
+</div>
+
+<!-- Xiaohongshu Toast -->
+<div id="xhs-toast" class="xhs-toast" style="display:none;">
+  <i class="fas fa-check-circle"></i> 链接已复制，请打开小红书粘贴分享
+</div>
+
+<style>
+  /* WeChat QR Modal */
+  .wechat-qr-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wechat-qr-card {
+    background: var(--card-bg, #fff);
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 320px;
+    width: 90%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    text-align: center;
+  }
+  .wechat-qr-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-color, #333);
+    position: relative;
+  }
+  .wechat-qr-close {
+    position: absolute;
+    right: -8px;
+    top: -4px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted-color, #999);
+    line-height: 1;
+  }
+  .wechat-qr-close:hover { color: var(--text-color, #333); }
+  .wechat-qr-body img {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+  }
+  .wechat-qr-tip {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: var(--text-muted-color, #999);
+  }
+
+  /* Xiaohongshu Toast */
+  .xhs-toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ff2442;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    z-index: 10001;
+    box-shadow: 0 4px 16px rgba(255,36,66,0.3);
+    white-space: nowrap;
+  }
+
+  /* WeChat icon color */
+  .share-wechat-btn i { color: #07C160; }
+  .share-xhs-btn i { color: #ff2442; }
+</style>
+
+<script>
+  function showWechatQR() {
+    var pageUrl = encodeURIComponent(window.location.href);
+    var qrApiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + pageUrl;
+    document.getElementById('wechat-qr-img').src = qrApiUrl;
+    document.getElementById('wechat-qr-modal').style.display = 'flex';
+  }
+
+  function hideWechatQR(e) {
+    document.getElementById('wechat-qr-modal').style.display = 'none';
+  }
+
+  function copyForXiaohongshu(btn) {
+    var url = btn.getAttribute('data-clipboard-text') || window.location.href;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(function() {
+        showXhsToast();
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = url;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showXhsToast();
+    }
+  }
+
+  function showXhsToast() {
+    var toast = document.getElementById('xhs-toast');
+    toast.style.display = 'block';
+    setTimeout(function() { toast.style.display = 'none'; }, 3000);
+  }
+
+  // Close modal on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') hideWechatQR(e);
+  });
+</script>
