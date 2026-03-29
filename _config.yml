@@ -77,7 +77,7 @@ theme_mode: # leave empty to enable light/dark toggle (defaults to system prefer
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: "/assets/img/cyberflying.jpg"
+avatar: "/assets/img/cyberflying.webp"
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
